@@ -9,6 +9,7 @@ describe 'cdap::router' do
         node.default['hadoop']['mapred_site']['mapreduce.framework.name'] = 'yarn'
         stub_command(/update-alternatives --display /).and_return(false)
         stub_command(/test -L /).and_return(false)
+        stub_command(/getent/).and_return(false)
       end.converge(described_recipe)
     end
     pkg = 'cdap-router'

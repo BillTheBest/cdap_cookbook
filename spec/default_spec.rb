@@ -10,23 +10,8 @@ describe 'cdap::default' do
         node.override['cdap']['cdap_env']['log_dir'] = '/test/logs/cdap'
         stub_command(/update-alternatives --display /).and_return(false)
         stub_command(/test -L /).and_return(false)
+        stub_command(/getent/).and_return(false)
       end.converge(described_recipe)
-    end
-
-    it 'installs cdap package' do
-      expect(chef_run).to install_package('cdap')
-    end
-
-    it 'creates /etc/profile.d/cdap_home.sh file' do
-      expect(chef_run).to create_file('/etc/profile.d/cdap_home.sh')
-    end
-
-    it 'creates /etc/cdap/conf.chef/cdap-site.xml template' do
-      expect(chef_run).to create_template('/etc/cdap/conf.chef/cdap-site.xml')
-    end
-
-    it 'logs JAVA_HOME' do
-      expect(chef_run).to write_log('JAVA_HOME = /usr/lib/jvm/java')
     end
 
     it 'creates /test/logs/cdap directory' do

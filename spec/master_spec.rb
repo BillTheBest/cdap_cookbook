@@ -9,6 +9,7 @@ describe 'cdap::master' do
         node.default['hadoop']['mapred_site']['mapreduce.framework.name'] = 'yarn'
         stub_command(/update-alternatives --display /).and_return(false)
         stub_command(/test -L /).and_return(false)
+        stub_command(/getent/).and_return(false)
       end.converge(described_recipe)
     end
     pkg = 'cdap-master'
@@ -57,6 +58,7 @@ describe 'cdap::master' do
         node.override['cdap']['version'] = '3.0.6-1'
         stub_command(/update-alternatives --display /).and_return(false)
         stub_command(/test -L /).and_return(false)
+        stub_command(/getent/).and_return(false)
       end.converge(described_recipe)
     end
 
